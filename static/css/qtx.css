@@ -1,0 +1,175 @@
+
+#fpWaveWrap {
+  width: 300px;
+  height: 300px; border-radius: 300px; position: absolute; left: 50%; margin-left: -150px; top: 20%;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+  background: lightpink;
+  overflow: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
+}
+.fpWave {
+  position: absolute;
+  top: -130px;
+  left: 50%;
+  background: #fff;
+  width: 400px;
+  height: 400px;
+  margin-left: -200px;
+  margin-top: 0;
+  -webkit-transform-origin: 50% 48%;
+          transform-origin: 50% 48%;
+  border-radius: 43%;
+  -webkit-animation: drift 3000ms infinite linear;
+          animation: drift 3000ms infinite linear;
+}
+
+.fpWave3 {
+  -webkit-animation: drift 2500ms infinite linear;
+          animation: drift 2500ms infinite linear;
+}
+
+.fpWave2 {
+  -webkit-animation: drift 5000ms infinite linear;
+          animation: drift 5000ms infinite linear;
+  opacity: .8;
+  background: #e16f7d;  top: -110px;
+}
+#fpLoadingTxt{
+	font-size: 18px; left: 20px; top: 20px; position: absolute;
+}
+
+
+.fpLogo {
+  position: absolute;
+  width: 302px; height: 302px;
+  left: -1px;
+  top: -1px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+@-webkit-keyframes drift {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  from {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  from {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+ #fpLoading {
+     width: 640px;
+     left: 50%;
+     margin-left: -320px;
+     top: 0;
+     height: 100%;
+     background: #f8f3ed;
+     position: absolute;
+     z-index: 99;
+ }
+ #fpLayout {
+     position: relative;
+     margin: 0 auto;
+     width: 100vw;
+     background: #000;
+ }
+ #fpLayout .section{
+ 	background: #f3f3f3;
+ }
+
+
+/*音乐播放 开始*/
+@-moz-keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        -moz-transform: translateY(20px)
+    }
+    100% {
+        opacity: 1;
+        -moz-transform: translateY(0)
+    }
+}
+.myFadeInUp{
+    -webkit-animation: fadeInUp 1s .2s ease infinite;
+    -moz-animation: fadeInUp 1s .2s ease infinite;
+}
+ #fpMusic {
+     position: absolute;
+     right: 50%;
+     top: 30px;
+     width: 80px;
+     height: 80px;
+     margin-right: -50vw;
+     z-index: 1;
+ }
+#fpMusicPlay{
+     background: url(../images/music_play.gif) no-repeat; width: 80px; height: 80px;
+ }
+ 
+#fpMusicPlayBtn {
+     position: absolute;
+     width: 44px;
+     height: 44px; margin-left: 20px; margin-top: 20px;
+     background: url(../images/music.png) no-repeat;
+     -webkit-animation: rotate2d 1.2s linear infinite;
+     animation: rotate2d 1.2s linear infinite;
+ }
+ 
+ #fpMusic.stopped #fpMusicPlayBtn {
+     -webkit-animation: none;
+     animation: none;
+ }
+ #fpMusic.stopped #fpMusicPlay{
+ 	background: none;
+ }
+
+ .arrow{
+     position: absolute;
+     left: 50%;
+     margin-left: -20px;
+     width: 40px;
+ }
+ /*音乐播放 结束*/
+
+/*rotate2d*/
+ .rotate2d {
+     -webkit-animation-timing-function: linear;
+     animation-timing-function: linear;
+     -webkit-animation-name: rotate2d;
+     animation-name: rotate2d
+ }
+ 
+ @-webkit-keyframes rotate2d {
+     from {
+         -webkit-transform: rotate(0deg);
+         transform: rotate(0deg)
+     }
+     to {
+         -webkit-transform: rotate(360deg);
+         transform: rotate(360deg)
+     }
+ }
+ 
+ @keyframes rotate2d {
+     from {
+         -webkit-transform: rotate(0deg);
+         transform: rotate(0deg)
+     }
+     to {
+         -webkit-transform: rotate(360deg);
+         transform: rotate(360deg)
+     }
+ }
+ /*rotate2d*/

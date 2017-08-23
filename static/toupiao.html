@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>投票</title>
+    <link rel="stylesheet" href="./css/tp.css">
+    <link rel="stylesheet" href="./skin/line/blue.css">
+    <link rel="stylesheet" href="./css/sweetalert.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/jquery-1.7.2.js"></script>
+    <script src="./js/icheck.min.js"></script>
+    <script src="./js/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="show">
+        <input class="jiemu" id="input-1" value="jm1" type="checkbox"><label for="input-1">节目一</label>
+        <input class="jiemu" id="input-2" value="jm2" type="checkbox"><label for="input-2">节目二</label>
+        <input class="jiemu" id="input-3" value="jm3" type="checkbox"><label for="input-3">节目三</label>
+        <input class="jiemu" id="input-4" value="jm4" type="checkbox"><label for="input-4">节目四</label>
+        <input class="jiemu" id="input-5" value="jm5" type="checkbox"><label for="input-5">节目五</label>
+        <input class="jiemu" id="input-6" value="jm6" type="checkbox"><label for="input-6">节目六</label>
+        <input class="jiemu" id="input-7" value="jm7" type="checkbox"><label for="input-7">节目七</label>
+        <input class="jiemu" id="input-8" value="jm8" type="checkbox"><label for="input-8">节目八</label>
+        <input class="jiemu" id="input-9" value="jm9" type="checkbox"><label for="input-9">节目九</label>
+    </div>
+    <button id="tp" class="btn btn-info center-block">投出自己的选票</button>
+    <script>
+        $(function () {
+//icheck.js input style
+                $('input').each(function(){
+                    var self = $(this),
+                        label = self.next(),
+                        label_text = label.text();
+                    label.remove();
+                    self.iCheck({
+                        checkboxClass: 'icheckbox_line-blue',
+                        radioClass: 'iradio_line-blue',
+                        insert: '<div class="icheck_line-icon"></div>' + label_text
+                    });
+                });
+
+            $('#tp').click(function () {
+              //  console.log(localStorage);
+                var arr=[];
+                var tpkey=localStorage.getItem('key');
+                if(tpkey=="oldUser"){
+                    swal({
+                        title: "",
+                        text: "您已投过票",
+                        type: "warning",
+                        confirmButtonText: "关闭"
+                    });
+                   // alert('您已投过票');
+                    return;
+                }else{
+                    //获取被选中节目
+                    $('.jiemu').each(function (a,b) {
+                 //      console.log(b.checked);
+                        if(b.checked){
+                            arr.push(b.value);
+
+                        };
+                    });
+//                    console.log(arr);
+                    if(arr.length>2){
+                        swal({
+                            title: "",
+                            text: "每个人只有两票",
+                            type: "warning",
+                            confirmButtonText: "关闭"
+                        });
+                      //  alert("每个人只有两票");
+                        return
+                    }else{
+                        swal({
+                            title: "",
+                            text: "提交成功!",
+                            type: "success",
+                            confirmButtonText: "关闭"
+                        });
+                        localStorage.setItem('key','oldUser');
+                            $.ajax({
+                                    url:"/users/toupiao",
+                                    type:"post",
+                                    data:{0:arr[0],1:arr[1]},
+                                    success:function (data) {
+                                        console.log(data);
+                                    },error:function (data) {
+
+                                }
+
+                            })
+
+                    };
+                }
+            })
+        })
+    </script>
+</body>
+</html>

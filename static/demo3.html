@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta content="always" name="referrer">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap//3.3.6/css/bootstrap.min.css" />
+
+</head>
+
+<body>
+<div class="container">
+    <h1 style='text-align: center'>文件上传</h1>
+    <div class="form-group">
+        <form class="form" action="/users/tongji" method="post" enctype="multipart/form-data">
+            <label>用户名:<input type="text" name="username" class="form-control"></label>
+            <label>手机号:<input type="tel" name="tel"  class="form-control" ></label>
+            <label>地址: <input type="text" name="addr" class="form-control"></label>
+            <label><input type="file" name="file" class='file_up form-control' class="form-control"></label>
+            <label><button class="btn btn-primary form-control">button</button></label>
+        </form>
+    </div>
+</div>
+    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        function _(e) {
+            return document.querySelector(e);
+        }
+        let form = _('.form');
+        let imgURL = '';
+        let btn = _(".btn");
+        let fileUp = _('.file_up');
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (!fileUp.value) {
+                alert('选择上传的图片') ;
+            } else {
+                let formData = new FormData(form);
+//                console.log(formData)
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/tongji',
+                    data: formData,
+                    // 对data数据不做处理
+                    processData: false,
+                    // 不使用content-type，使用multipart/form-data
+                    contentType: false,
+                    success: function (data) {
+                        let imgData = JSON.parse(data);
+                        if(imgData)
+                            alert('submit success!');
+                        else
+                            alert('submit failed!');
+
+                        // 处理中文
+                        // 有 & 符号时使用 encodeURIComponent
+                        // let imageNewUrl = encodeURIComponent(imgData.image_newUrl);
+                        // 不做要求时使用 encodeURI
+//                        let imageNewUrl = encodeURI(imgData.image_newUrl)
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

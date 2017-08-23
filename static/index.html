@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/animate.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./skin/line/blue.css">
+    <link rel="stylesheet" type="text/css" href="css/qtx.css"/>
+</head>
+<body>
+
+<!--loading start -->
+<div id="fpLoading">
+    <div id='fpWaveWrap'>
+        <div class='fpWave fpWave1'></div>
+        <div class='fpWave fpWave2'></div>
+        <div class='fpWave fpWave3'></div>
+        <div class='fpLogo'><img src="images/logo.gif"/></div>
+    </div>
+    <div id="fpLoadingTxt">
+        <h2>资源加载 <span id="fpLoadingNum">0</span>%</h2>
+    </div>
+</div>
+<!--loading end -->
+
+<!--BGM start -->
+<div id="fpMusic">
+    <audio src="mp3/WithanOrchid.mp3" preload="preload" loop id="fpMusicAudio"></audio>
+    <div id="fpMusicPlay">
+        <div id="fpMusicPlayBtn"></div>
+    </div>
+</div>
+<!--BGM end -->
+
+<!--main start -->
+<div id="fpLayout" style="display: none;">
+    <div class="section page1">
+        <h2 data-fp-delay="0.75s" data-fp-animate="bounceIn" data-fp-duration="1.2s">
+            这是第1屏，延迟0.75秒，动画为bounceIn，动画时间1.2s
+        </h2>
+        <img class="arrow pa myFadeInUp" src="images/zys_img0.png">
+    </div>
+    <div class="section page2">
+        <h2 data-fp-delay="0.45s" data-fp-animate="flipInY" data-fp-duration="1.5s">
+            这是第2屏，延迟0.45秒，动画为flipInY（Y轴旋转），动画时间1.5s
+        </h2>
+        <img class="arrow pa myFadeInUp" src="images/zys_img0.png">
+    </div>
+    <div class="section page3">
+        <h2 data-fp-delay="0.25s" data-fp-animate="swing" data-fp-duration="1s">
+            这是第3屏，延迟0.25秒，动画为swing，动画时间1s
+        </h2>
+        <img class="arrow pa myFadeInUp" src="images/zys_img0.png">
+    </div>
+    <div class="section page4">
+          <div>
+                <h2>你喜欢什么</h2>
+         
+                    <input type="radio" name="address" value="钞票"><label>钞票</label>
+                    <input type="radio" name="address" value="美食"><label>美食</label>
+                    <input type="radio" name="address" value="旅游"><label>旅游</label>
+                    <input type="radio" name="address" value="钞票"><label>睡觉</label>
+               
+            </div>
+            <div>
+                <h2>你周末最喜欢做什么</h2>
+                <input type="radio" name="readdress" value="睡懒觉"><label>睡懒觉</label>
+                <input type="radio" name="readdress" value="打游戏"><label>打游戏</label>
+                <input type="radio" name="readdress" value="发发呆"><label>发发呆</label>
+                <input type="radio" name="readdress" value="享受美食"><label>享受美食</label>
+            </div>
+            <div>
+                <h2>你最喜欢什么</h2>
+                <input type="radio" name="mine" value="钞票"><label>钞票</label>
+                <input type="radio" name="mine" value="旅游"><label>旅游</label>
+                <input type="radio" name="mine" value="世界和平"><label>世界和平</label>
+            </div>
+
+            <button id="btn" onclick="zz()" class="btn btn-info center-block">提交</button>
+    </div>
+</div>
+<!--main end -->
+
+
+
+<script src="js/jquery-1.7.2.js" ></script>
+<script type='text/javascript' src="js/jquery.fullPage.min.js"></script>
+<script src="./js/icheck.min.js"></script>
+<script src="./js/sweetalert.min.js"></script>
+<script type='text/javascript' src="js/qtx.js"></script>
+
+<script>
+    $(function(){
+
+//        解决ios音频自动播放问题
+        function audioAutoPlay(id) {
+            var audio = document.getElementById(id),
+                play = function () {
+                    audio.play();
+                    document.removeEventListener("touchstart", play, false);
+                };
+            audio.play();
+            document.addEventListener("WeixinJSBridgeReady", function () {
+                play();
+            }, false);
+            document.addEventListener('YixinJSBridgeReady', function () {
+                play();
+            }, false);
+            document.addEventListener("touchstart", play, false);
+        }
+        audioAutoPlay('fpMusicAudio');
+
+        //icheck.js input style
+        $('input').each(function(){
+            var self = $(this),
+                label = self.next(),
+                label_text = label.text();
+            label.remove();
+            self.iCheck({
+                checkboxClass: 'icheckbox_line-blue',
+                radioClass: 'iradio_line-blue',
+                insert: '<div class="icheck_line-icon"></div>' + label_text
+            });
+        });
+
+        function myfp(){
+            $('#fpLayout').fullpage({
+                anchors: ['page1', 'page2', 'page3','page4'],
+                'navigation': false,
+                'navigationPosition': 'right',
+                afterRender:function(){
+                    fpRender();
+                },
+                afterLoad: function(anchorLink, index){
+
+                    fpLoad(index);
+
+                },
+                onLeave: function(index, direction){
+                    fpLeave(index);
+                }
+            });
+        }
+        fpLoading(myfp);
+
+    });
+       var zz= function () {
+        var radio1=$('input:radio[name="address"]:checked').val();
+        var radio2=$('input:radio[name="readdress"]:checked').val();
+        var radio3=$('input:radio[name="mine"]:checked').val();
+        if(radio1==null||radio2==null||radio3==null){
+            alert('请选择答案')
+        }else{
+            localStorage.setItem('a1',radio1);
+            localStorage.setItem('a2',radio2);
+            localStorage.setItem('a3',radio3);
+            window.location.href='./demo3.html'
+        }
+    }
+</script>
+</body>
+
+</html>
